@@ -56,7 +56,7 @@ class UsersController < ApplicationController
                                    :password_confirmation)
     end
 
-    # Before filters hello
+    # Before filters
 
     def signed_in_user
       unless signed_in?
