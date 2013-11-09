@@ -9,4 +9,12 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :event do
+    user
+    details "Pizza!"
+    start   Time.now + 2.days
+    finish  Time.now + 3.days
+    where   "Los Angeles"
+  end
 end

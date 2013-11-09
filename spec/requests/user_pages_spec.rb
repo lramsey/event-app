@@ -61,10 +61,19 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:e1) {FactoryGirl.create(:event, user: user, details: "hello") }
+    let!(:e2) {FactoryGirl.create(:event, user: user, details: "world") }
+
     before { visit user_path(user) }
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
+
+    describe "events" do
+      it { should have_content(e1.details) }
+      it { should have_content(e2.details) }
+      it { should have_content(user.events.count) }
+    end
   end
 
   describe "signup page" do

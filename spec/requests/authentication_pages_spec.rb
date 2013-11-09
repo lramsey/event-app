@@ -83,6 +83,19 @@ describe "Authentication" do
         end
       end
 
+      describe "in the Events controller" do
+
+        describe "submitting to the create action" do
+          before { post events_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete event_path(FactoryGirl.create(:event)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
