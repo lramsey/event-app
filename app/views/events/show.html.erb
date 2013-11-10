@@ -1,0 +1,10 @@
+<% provide(:title, @event.details) %>
+</br>
+<b><font size="7" color="black">Please join us!</font></b>
+</br></br></br>
+<font size="5" color="black">
+  What: <%= @event.details %> </br></br>
+  Location: <%= @event.where %></br></br>
+  When: from <%= @event.start %> to <%= @event.finish %></br></br>
+  Created by: <%= @event.user.name %></br></br>
+</font>

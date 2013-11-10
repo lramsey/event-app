@@ -1,10 +1,5 @@
-<div class="center hero-unit">
-  <h1>Welcome to Let's Go Out</h1>
-
-  <h2> Come here to set up fun events with friends.</h2>
-
-  <%= link_to "Sign up now!", signup_path,
-                              class: "btn btn-large btn-primary" %>
-</div>
-
-<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+<% if signed_in? %>
+  <%= render 'shared/signed_in_home' %>
+<% else %>
+  <%= render 'shared/signed_out_home' %>
+<% end %>

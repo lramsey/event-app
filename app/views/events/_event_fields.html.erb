@@ -1,0 +1,17 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+<%= f.label :details %>
+<%= f.text_field :details %>
+
+<%= f.label :where %>
+<%= f.text_field :where %>
+
+<span id="event_fields">
+  <%= f.label :start %>
+  <%= f.date_select :start %>
+</span>
+
+<span id="event_fields">
+  <%= f.label :finish %>
+  <%= f.date_select :finish %>
+</span>

@@ -156,6 +156,12 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+#event_fields {
+  width: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
 input {
   height: auto !important;
 }
