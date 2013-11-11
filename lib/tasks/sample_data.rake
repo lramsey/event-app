@@ -18,7 +18,7 @@ namespace :db do
     
     users = User.all(limit: 12)
     15.times do
-      details  = Faker::Lorem.sentence(5)
+      details  = Faker::Lorem.characters(char_count = 45)
       start    = Time.now + rand(6).days
       finish   = start + rand(2).days
       where = "Los Angeles"
