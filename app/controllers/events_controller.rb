@@ -15,7 +15,8 @@ class EventsController < ApplicationController
       redirect_to event_path(@event)
     else
       @feed_items = []
-      render 'static_pages/home'
+      flash[:error] = "Event not valid. Please try again."
+      redirect_to root_path
     end
   end
 
