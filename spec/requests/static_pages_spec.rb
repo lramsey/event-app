@@ -34,6 +34,7 @@ describe "Static pages" do
         end
       end
 
+
       it "should pluralize post numbers" do
         expect(page).to have_content("2 events")
         click_link("delete", match: :first)
@@ -45,6 +46,17 @@ describe "Static pages" do
                                    finish: Time.now + 3.days, where: "Los Angeles") }
         visit root_path
         expect(page).to have_selector('div.pagination')
+      end
+
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
       end
     end  
   end

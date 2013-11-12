@@ -161,10 +161,22 @@ describe User do
       let(:unfollowed_event) do
         FactoryGirl.create(:event, user: FactoryGirl.create(:user))
       end
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.events.create!(details: "Lorem ipsum", start: Time.now + 2.days,
+                                               finish: Time.now + 3.days, where: "Los Angeles" ) }
+      end
 
       its(:feed) { should include(newer_event) }
       its(:feed) { should include(older_event) }
       its(:feed) { should_not include(unfollowed_event) }
+      its(:feed) do
+        followed_user.events.each do |event|
+          should include(event)
+        end
+      end
     end
   end
 
@@ -173,6 +185,7 @@ describe User do
     before do
       @user.save
       @user.follow!(other_user)
+      other_user.follow!(@user)
     end
 
     it { should be_following(other_user) }
@@ -188,6 +201,21 @@ describe User do
 
       it { should_not be_following(other_user) }
       its(:followed_users) { should_not include(other_user) }
+    end
+
+    it "should destroy associated relationships" do
+      array_followed_users = @user.followed_users.to_a
+      array_followers     = @user.followers.to_a
+      @user.destroy
+      expect(array_followed_users).not_to be_empty
+      expect(array_followers).not_to be_empty
+
+      array_followed_users.each do |array_followed_user|
+        expect(Relationship.where(id: array_followed_user.id)).to be_empty
+      end
+      array_followers.each do |array_follower|
+        expect(Relationship.where(id: array_follower.id)).to be_empty
+      end
     end
   end
 end
