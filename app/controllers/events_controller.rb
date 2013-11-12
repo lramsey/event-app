@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :signed_in_user
-  before_action :correct_user,   only: :destroy
+  before_action :correct_user,   only: [:edit, :update, :destroy]
   def show
    @event = Event.find(params[:id])
   end
@@ -17,6 +17,18 @@ class EventsController < ApplicationController
     else
       @feed_items = []
       render 'new'
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @event.update_attributes(event_params)
+      flash[:success] = "Event updated"
+      redirect_to @event
+    else
+      render 'edit'
     end
   end
 
