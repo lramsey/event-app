@@ -34,7 +34,7 @@ describe "Event pages" do
       it "should create an event" do
         expect(page).to have_content("Event created!")
       end
-    end
+    end 
   end
   
   describe "event destruction" do
