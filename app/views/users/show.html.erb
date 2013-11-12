@@ -6,7 +6,9 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
-      <h1><%= link_to "Create event", new_event_path %></h1>
+      <% if current_user?(@user) %>
+        <h1><%= link_to "Create event", new_event_path %></h1>
+      <% end %>
     </section>
     <section>
       <%= render 'shared/stats' %>
