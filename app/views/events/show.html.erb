@@ -5,6 +5,11 @@
 <font size="5" color="black">
   What: <%= @event.details %> </br></br>
   Location: <%= @event.where %></br></br>
-  When: from <%= @event.start %> to <%= @event.finish %></br></br>
+  <% if @event.start == @event.finish %>
+    When: <%= @event.start %>
+  <% else %>
+    When: from <%= @event.start %> to <%= @event.finish %>
+  <% end %>
+  </br></br>
   Created by: <%= @event.user.name %></br></br>
 </font>

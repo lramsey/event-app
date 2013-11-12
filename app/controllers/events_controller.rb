@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :signed_in_user
+  before_action :correct_user,   only: :destroy
   def show
    @event = Event.find(params[:id])
   end
@@ -15,12 +16,13 @@ class EventsController < ApplicationController
       redirect_to event_path(@event)
     else
       @feed_items = []
-      flash[:error] = "Event not valid. Please try again."
-      redirect_to root_path
+      render 'new'
     end
   end
 
   def destroy
+    @event.destroy
+    redirect_to root_url
   end
 
   private

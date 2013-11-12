@@ -33,7 +33,20 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.details)
         end
       end
-    end
+
+      it "should pluralize post numbers" do
+        expect(page).to have_content("2 events")
+        click_link("delete", match: :first)
+        expect(page).to have_content("1 event")
+      end
+
+      it "should have pagination" do
+        50.times { FactoryGirl.create(:event, user: user, details: "Lorem ipsum", start: Time.now + 2.days, 
+                                   finish: Time.now + 3.days, where: "Los Angeles") }
+        visit root_path
+        expect(page).to have_selector('div.pagination')
+      end
+    end  
   end
 
   describe "Help page" do
@@ -64,5 +77,4 @@ describe "Static pages" do
     click_link "let's go out"
     expect(page).to have_title(full_title(''))
   end
-
 end
