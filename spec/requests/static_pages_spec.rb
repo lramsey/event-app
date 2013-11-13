@@ -42,8 +42,7 @@ describe "Static pages" do
       end
 
       it "should have pagination" do
-        50.times { FactoryGirl.create(:event, user: user, details: "Lorem ipsum", start: Time.now + 2.days, 
-                                   finish: Time.now + 3.days, where: "Los Angeles") }
+        50.times { FactoryGirl.create(:event, user: user) }
         visit root_path
         expect(page).to have_selector('div.pagination')
       end

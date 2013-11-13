@@ -44,3 +44,9 @@ def sign_in(user, options={})
     click_button "Sign in"
   end
 end
+
+def create_event
+  fill_in 'Details', with: "Lorem ipsum"
+  fill_in 'Where',   with: "Los Angeles"
+  click_button "Create event" 
+end

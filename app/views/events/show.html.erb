@@ -1,17 +1,9 @@
 <% provide(:title, @event.details) %>
-<div>
-  <% if current_user == @event.user %>
-    <%= link_to "edit", edit_event_path %>
-    &nbsp;
-    <%= link_to "delete", @event, 
-                        method: :delete,
-                        data: { confirm: "You sure?" },
-                        title: @event.details %>
-    <% end %>
-</div>
-</br></br>
-<center>
-  <b><font size="7" color="black">Please join us!</font></b>
+</br>
+<center><b>
+  <font size="7" color="black">Please join us!</font>
+</b></center>
+  <aside class="span6">
   </br></br>
   <font size="5" color="black">
     What: <%= @event.details %> </br></br>
@@ -23,4 +15,15 @@
     <% end %>
   </br></br>
   Created by: <%= @event.user.name %></br></br>
-</font></center>
+</font>
+</aside>
+<div align="right">
+  <% if current_user?(@event.user) %>
+    <%= link_to "edit", edit_event_path %>
+    &nbsp;
+    <%= link_to "delete", @event, 
+                        method: :delete,
+                        data: { confirm: "You sure?" },
+                        title: @event.details %>
+    <% end %>
+</div>
