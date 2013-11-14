@@ -1,29 +1,35 @@
 <% provide(:title, @event.details) %>
-</br>
-<center><b>
-  <font size="7" color="black">Please join us!</font>
-</b></center>
-  <aside class="span6">
-  </br></br>
-  <font size="5" color="black">
-    What: <%= @event.details %> </br></br>
-    Location: <%= @event.where %></br></br>
-    <% if @event.start == @event.finish %>
-      When: <%= @event.start %>
-    <% else %>
-      When: from <%= @event.start %> to <%= @event.finish %>
-    <% end %>
-  </br></br>
-  Created by: <%= @event.user.name %></br></br>
-</font>
-</aside>
-<div align="right">
-  <% if current_user?(@event.user) %>
-    <%= link_to "edit", edit_event_path %>
-    &nbsp;
-    <%= link_to "delete", @event, 
+<% if current_user.following?(@event.user) || current_user?(@event.user) %>
+  </br>
+  <center><b>
+    <font size="7" color="black">Please join us!</font>
+  </b></center>
+  <center>
+    </br></br>
+    <font size="5" color="black">
+      What: <%= @event.details %> </br></br>
+      Location: <%= @event.where %></br></br>
+      <% if @event.start == @event.finish %>
+        When: <%= @event.start %>
+      <% else %>
+        When: from <%= @event.start %> to <%= @event.finish %>
+      <% end %>
+    </br></br>
+    Created by: <%= @event.user.name %></br></br>
+    </font>
+  </center>
+  <div align="left">
+    <% if current_user?(@event.user) %>
+      <%= link_to "edit", edit_event_path %>
+      &nbsp;
+      <%= link_to "delete", @event, 
                         method: :delete,
                         data: { confirm: "You sure?" },
                         title: @event.details %>
     <% end %>
-</div>
+  </div>
+
+<% else %>
+  </br>
+  <font size="6" color="black">Please follow <%= link_to "#{@event.user.name}", user_path(@event.user) %> to see this event.</font>
+<%end%>
