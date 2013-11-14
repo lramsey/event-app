@@ -47,17 +47,32 @@ describe "Event pages" do
 
   describe "event show page" do
 
-    describe "as incorrect user" do
+    describe "as not event user" do
       let(:other_user) { FactoryGirl.create(:user) }
       let(:other_event) { FactoryGirl.create(:event, user: other_user) }
       before { visit event_path(other_event) }
 
       it { should_not have_link("edit") }
       it { should_not have_link("delete") }
-      it { should have_content("join us!") }
+      
+      describe "if following event user" do
+        before do 
+          user.follow!(other_user)
+          visit event_path(other_event)
+        end
+
+        it { should have_content("join us!") }
+        it { should have_content("#{other_event.where}") }
+      end
+
+      describe "if not following event user" do
+
+        it { should_not have_content("join us") }
+        it { should have_link("#{other_event.user.name}") }
+      end
     end
-    
-    describe "as correct user" do
+
+    describe "as event user" do
       before do
         visit new_event_path
         create_event
